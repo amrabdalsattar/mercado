@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export function ProductFilters({ filters, categories }) {
@@ -56,6 +57,10 @@ export function ProductFilters({ filters, categories }) {
             <option value="100-300">$100 - $300</option>
           </select>
         </div>
+
+        <Button type="submit" className="lg:justify-self-start">
+          Apply filters
+        </Button>
       </form>
     </Card>
   );

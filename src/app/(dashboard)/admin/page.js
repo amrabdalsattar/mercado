@@ -1,15 +1,37 @@
 import { Card } from "@/components/ui/card";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { StatCard } from "@/components/ui/stat-card";
-import { getAdminMetrics, getOrders } from "@/lib/mock-data";
+import { CategoryForm } from "@/features/products/components/category-form";
+import { AdminOrderStatusForm } from "@/features/orders/components/admin-order-status-form";
+import { listOrdersForAdmin } from "@/features/orders/services/order-service";
+import {
+  listCategories,
+  listProducts,
+} from "@/features/products/services/product-service";
+import { requireRole } from "@/lib/auth";
+import { formatCurrency } from "@/lib/utils";
 
 export const metadata = {
   title: "Admin",
 };
 
-export default function AdminPage() {
-  const metrics = getAdminMetrics();
-  const orders = getOrders();
+export const dynamic = "force-dynamic";
+
+export default async function AdminPage() {
+  await requireRole("ADMIN");
+  const [orders, products, categories] = await Promise.all([
+    listOrdersForAdmin(),
+    listProducts({}),
+    listCategories(),
+  ]);
+
+  const revenue = orders.reduce((sum, order) => sum + order.total, 0);
+  const metrics = [
+    { label: "Revenue", value: formatCurrency(revenue), hint: "All-time order value" },
+    { label: "Orders", value: String(orders.length), hint: "Tracked in the database" },
+    { label: "Products", value: String(products.length), hint: "Active catalog listings" },
+    { label: "Categories", value: String(categories.length), hint: "Managed by admin" },
+  ];
 
   return (
     <div className="shell py-12">
@@ -35,14 +57,15 @@ export default function AdminPage() {
               >
                 <div className="flex items-center justify-between gap-3">
                   <div>
-                    <p className="font-semibold">{order.id}</p>
+                    <p className="font-semibold">{order._id.toString()}</p>
                     <p className="text-sm text-[var(--ink-700)]">
-                      {order.customer} • {order.status}
+                      {order.user?.name || order.shippingAddress.fullName} • {order.status}
                     </p>
                   </div>
-                  <button className="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-medium">
-                    Update status
-                  </button>
+                  <AdminOrderStatusForm
+                    orderId={order._id.toString()}
+                    currentStatus={order.status}
+                  />
                 </div>
               </div>
             ))}
@@ -50,11 +73,12 @@ export default function AdminPage() {
         </Card>
 
         <Card className="p-6">
-          <h2 className="text-2xl font-semibold">What this dashboard owns</h2>
-          <div className="mt-5 grid gap-3 text-sm leading-7 text-[var(--ink-700)]">
-            <p>User moderation, role changes, and soft-delete workflows.</p>
-            <p>Order tracking, fulfillment exceptions, and refund visibility.</p>
-            <p>Merchandising oversight for featured products, categories, and homepage content.</p>
+          <h2 className="text-2xl font-semibold">Create category</h2>
+          <p className="mt-3 text-sm leading-7 text-[var(--ink-700)]">
+            This form now persists category data instead of rendering a static dashboard tile.
+          </p>
+          <div className="mt-5">
+            <CategoryForm />
           </div>
         </Card>
       </div>

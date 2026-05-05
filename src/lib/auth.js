@@ -101,3 +101,27 @@ export async function requireRole(role) {
   }
   return user;
 }
+
+export async function requireApiUser() {
+  const session = await getSession();
+
+  if (!session?.user) {
+    const error = new Error("Authentication required.");
+    error.status = 401;
+    throw error;
+  }
+
+  return session.user;
+}
+
+export async function requireApiRole(role) {
+  const user = await requireApiUser();
+
+  if (user.role !== role && user.role !== "ADMIN") {
+    const error = new Error("You do not have access to this resource.");
+    error.status = 403;
+    throw error;
+  }
+
+  return user;
+}

@@ -36,6 +36,18 @@ export async function listProducts(filters = {}) {
     query.$text = { $search: filters.q };
   }
 
+  if (filters.availability === "in-stock") {
+    query.stock = { $gt: 0 };
+  }
+
+  if (filters.price === "under-100") {
+    query.price = { $lt: 100 };
+  }
+
+  if (filters.price === "100-300") {
+    query.price = { $gte: 100, $lte: 300 };
+  }
+
   const sort =
     filters.sort === "price-asc"
       ? { price: 1 }

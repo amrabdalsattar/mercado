@@ -1,28 +1,23 @@
 # Mercado Commerce
 
-A scalable e-commerce application scaffold built with Next.js 16 App Router and JavaScript.
+A production-style e-commerce application built with Next.js 16 App Router, MongoDB, Mongoose, Zod, and JWT cookie authentication.
 
-## What is implemented
+## Implemented
 
-- Storefront home page with merchandising sections and featured products
-- Server-rendered product catalog with search/filter query params
-- Dynamic product detail pages using Next.js 16 async `params`
-- Cart, checkout, and orders UI flows
-- Seller and admin dashboard surfaces
-- REST-style route handlers with a consistent `{ data, error, meta }` response shape
-- Shared UI primitives and feature-oriented component structure
+- MongoDB-backed `User`, `Category`, `Product`, `Cart`, and `Order` models
+- JWT authentication with persisted registration, login, session, and logout routes
+- Protected customer, seller, and admin flows with role-based route access
+- Live storefront, product detail, cart, checkout, orders, seller workspace, and admin dashboard
+- Clickable forms/actions for category creation, product creation, add to cart, cart updates, checkout, and order status updates
+- REST-style API handlers returning `{ data, error, meta }`
 
-## Current data layer
+## Required environment variables
 
-The app uses a mock domain layer in [`src/lib/mock-data.js`](./src/lib/mock-data.js) so it runs on the dependencies already installed in the workspace.
+Copy `.env.example` to `.env.local` and provide:
 
-That keeps the architecture clean while leaving obvious extension points for:
-
-- MongoDB and Mongoose models
-- NextAuth authentication providers
-- React Query client caching
-- React Hook Form and Zod validation
-- Stripe payments and webhook handling
+- `MONGODB_URI`
+- `JWT_SECRET`
+- `APP_URL`
 
 ## Run locally
 
@@ -30,7 +25,7 @@ That keeps the architecture clean while leaving obvious extension points for:
 npm run dev
 ```
 
-## Key routes
+## Important routes
 
 - `/`
 - `/products`
@@ -40,10 +35,20 @@ npm run dev
 - `/orders`
 - `/login`
 - `/register`
-- `/verify`
 - `/seller`
 - `/admin`
-- `/api/products`
-- `/api/products/[slug]`
-- `/api/categories`
-- `/api/orders`
+
+## Important API routes
+
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `POST /api/auth/logout`
+- `GET /api/auth/session`
+- `GET, POST /api/products`
+- `GET, PUT, DELETE /api/products/[slug]`
+- `GET, POST /api/categories`
+- `GET /api/cart`
+- `POST /api/cart/items`
+- `PUT, DELETE /api/cart/items/[id]`
+- `GET, POST /api/orders`
+- `PUT /api/admin/orders/[id]/status`
