@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { env, getJwtSecret } from "@/lib/env";
+import { env, getJwtSecret, hasDatabaseConfig } from "@/lib/env";
 import { findUserById } from "@/features/auth/services/auth-service";
 
 const AUTH_COOKIE = "mercado_token";
@@ -54,6 +54,10 @@ export async function clearAuthCookie() {
 }
 
 export async function getSession() {
+  if (!hasDatabaseConfig() || !env.JWT_SECRET) {
+    return null;
+  }
+
   const cookieStore = await cookies();
   const token = cookieStore.get(AUTH_COOKIE)?.value;
 
