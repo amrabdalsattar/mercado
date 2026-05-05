@@ -16,6 +16,8 @@ export async function GET(request) {
       q: searchParams.get("q") ?? "",
       category: searchParams.get("category") ?? "",
       sort: searchParams.get("sort") ?? "featured",
+      availability: searchParams.get("availability") ?? "",
+      price: searchParams.get("price") ?? "",
     });
 
     if (!parsed.success) {

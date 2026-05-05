@@ -27,9 +27,9 @@ export default async function CheckoutPage() {
         <Card className="h-fit p-6">
           <h2 className="text-2xl font-semibold">Why this checkout scales</h2>
           <div className="mt-5 grid gap-3 text-sm leading-7 text-[var(--ink-700)]">
-            <p>Guest-friendly and easy to convert into an account after purchase.</p>
-            <p>Server-side order totals and payment confirmation can be centralized cleanly.</p>
-            <p>Shipping, tax, and discount calculations have a dedicated summary region.</p>
+            <p>Authenticated checkout keeps cart ownership, orders, and permissions consistent.</p>
+            <p>Server-side order totals and stock deductions are centralized in one service.</p>
+            <p>Shipping, tax, and payment integrations can extend this flow without changing the page contract.</p>
           </div>
         </Card>
       </div>

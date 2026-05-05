@@ -4,6 +4,8 @@ export const productQuerySchema = z.object({
   q: z.string().optional().default(""),
   category: z.string().optional().default(""),
   sort: z.enum(["featured", "price-asc", "price-desc", "rating", "newest"]).optional().default("featured"),
+  availability: z.string().optional().default(""),
+  price: z.string().optional().default(""),
 });
 
 export const productCreateSchema = z.object({

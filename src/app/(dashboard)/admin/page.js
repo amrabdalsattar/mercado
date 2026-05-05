@@ -52,7 +52,7 @@ export default async function AdminPage() {
           <div className="mt-5 grid gap-4">
             {orders.map((order) => (
               <div
-                key={order.id}
+                key={order._id.toString()}
                 className="rounded-2xl border border-[var(--line)] bg-white/60 px-4 py-4"
               >
                 <div className="flex items-center justify-between gap-3">
