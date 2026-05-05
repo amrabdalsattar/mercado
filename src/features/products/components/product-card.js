@@ -5,17 +5,22 @@ import { formatCurrency } from "@/lib/utils";
 
 export function ProductCard({ product }) {
   const price = product.salePrice ?? product.price;
+  const accent = product.coverImage
+    ? undefined
+    : "from-[var(--surface-2)] via-white to-[var(--surface-1)]";
 
   return (
     <Link href={`/products/${product.slug}`} className="group block h-full">
       <Card className="flex h-full flex-col overflow-hidden rounded-[30px]">
         <div
-          className={`min-h-56 bg-gradient-to-br ${product.accent} p-6 transition duration-300 group-hover:scale-[1.01]`}
+          className={`min-h-56 ${product.coverImage ? "bg-[var(--surface-1)]" : `bg-gradient-to-br ${accent}`} p-6 transition duration-300 group-hover:scale-[1.01]`}
         >
           <div className="flex h-full flex-col justify-between">
-            <Badge className="w-fit bg-white/80">{product.badge}</Badge>
+            <Badge className="w-fit bg-white/80">
+              {product.featured ? "Featured" : "Live"}
+            </Badge>
             <div className="ml-auto rounded-full border border-white/60 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--ink-700)]">
-              {product.category}
+              {product.category || "Catalog"}
             </div>
           </div>
         </div>
@@ -42,9 +47,7 @@ export function ProductCard({ product }) {
                 {product.rating} rating • {product.reviewsCount} reviews
               </p>
             </div>
-            <p className="text-sm font-medium text-[var(--ink-700)]">
-              {product.stock} in stock
-            </p>
+            <p className="text-sm font-medium text-[var(--ink-700)]">{product.stock} in stock</p>
           </div>
         </div>
       </Card>

@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { getSession } from "@/lib/auth";
+import { LogoutButton } from "@/features/auth/components/logout-button";
 
 const links = [
   { href: "/", label: "Home" },
@@ -10,7 +12,15 @@ const links = [
   { href: "/admin", label: "Admin" },
 ];
 
-export function SiteHeader() {
+export async function SiteHeader() {
+  const session = await getSession();
+  const dashboardHref =
+    session?.user?.role === "ADMIN"
+      ? "/admin"
+      : session?.user?.role === "SELLER"
+        ? "/seller"
+        : "/orders";
+
   return (
     <header className="sticky top-0 z-20 border-b border-black/5 bg-[color:rgba(245,239,228,0.75)] backdrop-blur-xl">
       <div className="shell flex items-center justify-between gap-4 py-4">
@@ -39,9 +49,18 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Button as="link" href="/login" variant="ghost">
-            Sign in
-          </Button>
+          {session?.user ? (
+            <>
+              <Button as="link" href={dashboardHref} variant="ghost">
+                {session.user.name}
+              </Button>
+              <LogoutButton />
+            </>
+          ) : (
+            <Button as="link" href="/login" variant="ghost">
+              Sign in
+            </Button>
+          )}
           <Button as="link" href="/checkout">
             Checkout
           </Button>
