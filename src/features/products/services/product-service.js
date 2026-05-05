@@ -102,6 +102,15 @@ export async function createProduct(input, sellerId) {
   });
 }
 
+export async function listProductsBySeller(sellerId) {
+  await connectDB();
+  return Product.find({ seller: sellerId, isActive: true })
+    .populate("category", "name slug")
+    .populate("seller", "name")
+    .sort({ createdAt: -1 })
+    .lean(false);
+}
+
 export async function updateProduct(slug, input) {
   await connectDB();
   return Product.findOneAndUpdate(

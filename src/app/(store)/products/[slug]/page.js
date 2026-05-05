@@ -3,17 +3,21 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { AddToCartButton } from "@/features/cart/components/add-to-cart-button";
+import { ProductCard } from "@/features/products/components/product-card";
 import {
   getProductBySlug,
   getRelatedProducts,
-  getSellers,
-} from "@/lib/mock-data";
-import { ProductCard } from "@/features/products/components/product-card";
+} from "@/features/products/services/product-service";
+import { serializeProduct } from "@/lib/serializers";
+import { safeDbCall } from "@/lib/safe-db";
 import { formatCurrency } from "@/lib/utils";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await safeDbCall(async () => getProductBySlug(slug), null);
 
   if (!product) {
     return { title: "Product not found" };
@@ -27,25 +31,31 @@ export async function generateMetadata({ params }) {
 
 export default async function ProductDetailPage({ params }) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const rawProduct = await safeDbCall(async () => getProductBySlug(slug), null);
 
-  if (!product) {
+  if (!rawProduct) {
     notFound();
   }
 
-  const seller = getSellers().find((entry) => entry.id === product.sellerId);
-  const relatedProducts = getRelatedProducts(product.categoryId, product.slug);
+  const product = serializeProduct(rawProduct);
+  const relatedProducts = await safeDbCall(
+    async () =>
+      (await getRelatedProducts(product.categoryId, product.id)).map(serializeProduct),
+    []
+  );
   const price = product.salePrice ?? product.price;
 
   return (
     <div className="shell py-12">
       <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-        <Card className={`overflow-hidden rounded-[36px] bg-gradient-to-br ${product.accent} p-8`}>
+        <Card className="overflow-hidden rounded-[36px] bg-gradient-to-br from-[var(--surface-2)] via-white to-[var(--surface-1)] p-8">
           <div className="flex h-full min-h-[480px] flex-col justify-between">
-            <Badge className="w-fit bg-white/80">{product.badge}</Badge>
+            <Badge className="w-fit bg-white/80">
+              {product.featured ? "Featured" : "Product detail"}
+            </Badge>
             <div className="space-y-3">
               <p className="text-sm uppercase tracking-[0.22em] text-[var(--ink-700)]">
-                {product.category}
+                {product.category || "Catalog"}
               </p>
               <h1 className="max-w-xl text-5xl font-semibold tracking-tight text-balance">
                 {product.name}
@@ -72,9 +82,7 @@ export default async function ProductDetailPage({ params }) {
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">
-              <Button as="link" href="/cart">
-                Add to cart
-              </Button>
+              <AddToCartButton productId={product.id} />
               <Button as="link" href="/checkout" variant="secondary">
                 Buy now
               </Button>
@@ -86,7 +94,12 @@ export default async function ProductDetailPage({ params }) {
               Product specs
             </p>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              {product.specs.map((spec) => (
+              {[
+                `${product.stock} units in stock`,
+                product.category || "Unassigned category",
+                product.sellerName || "Marketplace seller",
+                product.featured ? "Featured merchandising slot" : "Standard catalog slot",
+              ].map((spec) => (
                 <div
                   key={spec}
                   className="rounded-2xl border border-[var(--line)] bg-white/60 px-4 py-3 text-sm"
@@ -101,10 +114,10 @@ export default async function ProductDetailPage({ params }) {
             <p className="text-sm uppercase tracking-[0.2em] text-[var(--brand-deep)]">
               Seller snapshot
             </p>
-            <h2 className="mt-4 text-2xl font-semibold">{seller?.name}</h2>
+            <h2 className="mt-4 text-2xl font-semibold">{product.sellerName}</h2>
             <p className="mt-2 text-sm leading-7 text-[var(--ink-700)]">
-              Rated {seller?.rating} with an average response time of {seller?.responseTime}.
-              This layout is ready for marketplace-specific seller policy and fulfillment data.
+              This listing belongs to a persisted seller account and is ready for richer profile,
+              fulfillment, and marketplace policy data.
             </p>
           </Card>
         </div>
@@ -115,11 +128,17 @@ export default async function ProductDetailPage({ params }) {
           eyebrow="Related products"
           title="Cross-sell slots with a reusable product-card surface."
         />
-        <div className="mt-8 grid gap-6 md:grid-cols-3">
-          {relatedProducts.map((relatedProduct) => (
-            <ProductCard key={relatedProduct.id} product={relatedProduct} />
-          ))}
-        </div>
+        {relatedProducts.length ? (
+          <div className="mt-8 grid gap-6 md:grid-cols-3">
+            {relatedProducts.map((relatedProduct) => (
+              <ProductCard key={relatedProduct.id} product={relatedProduct} />
+            ))}
+          </div>
+        ) : (
+          <Card className="mt-8 p-6 text-[var(--ink-700)]">
+            More products will appear here once this category has additional inventory.
+          </Card>
+        )}
       </section>
     </div>
   );
