@@ -1,8 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f5efe4;
+  --foreground: #1a140f;
+  --surface-0: #f5efe4;
+  --surface-1: #fffaf2;
+  --surface-2: #efe1c8;
+  --surface-3: #d6c3a1;
+  --ink-900: #1a140f;
+  --ink-700: #4f3d2f;
+  --ink-500: #7f6851;
+  --line: rgba(56, 37, 23, 0.12);
+  --brand: #c8643b;
+  --brand-deep: #8f3f20;
+  --success: #2f7d4a;
 }
 
 @theme inline {
@@ -12,15 +23,55 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.7), transparent 32%),
+    linear-gradient(180deg, #f9f2e5 0%, #f3ecdf 35%, #f8f4ee 100%);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+}
+
+.shell {
+  width: min(1200px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.card-surface {
+  background: color-mix(in srgb, white 84%, transparent);
+  border: 1px solid var(--line);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 18px 40px rgba(77, 48, 24, 0.08);
+  backdrop-filter: blur(14px);
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(to right, rgba(26, 20, 15, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(26, 20, 15, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.text-balance {
+  text-wrap: balance;
 }
