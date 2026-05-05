@@ -11,9 +11,10 @@ export default function VerifyPage() {
         <p className="text-sm uppercase tracking-[0.2em] text-[var(--brand-deep)]">
           Verify account
         </p>
-        <h1 className="mt-4 text-4xl font-semibold">Check your inbox or phone for a code.</h1>
+        <h1 className="mt-4 text-4xl font-semibold">Your account is ready to use.</h1>
         <p className="mt-5 text-base leading-8 text-[var(--ink-700)]">
-          This route is reserved for email and phone verification as the auth system expands.
+          Email verification can be added next, but registration now creates a persisted user and
+          signs them in immediately through the application session cookie.
         </p>
       </Card>
     </div>

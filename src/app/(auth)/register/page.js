@@ -1,6 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { AuthForm } from "@/features/auth/components/auth-form";
 
 export const metadata = {
   title: "Register",
@@ -14,21 +13,7 @@ export default function RegisterPage() {
           Create account
         </p>
         <h1 className="mt-4 text-4xl font-semibold">Register as customer or seller.</h1>
-        <form className="mt-8 grid gap-4 sm:grid-cols-2">
-          <Input placeholder="Full name" />
-          <Input type="email" placeholder="Email address" />
-          <Input placeholder="Phone number" />
-          <select className="rounded-2xl border border-[var(--line)] bg-white/80 px-4 py-3 text-sm outline-none">
-            <option>Customer</option>
-            <option>Seller</option>
-          </select>
-          <div className="sm:col-span-2">
-            <Input type="password" placeholder="Password" />
-          </div>
-          <div className="sm:col-span-2">
-            <Button type="button">Create account</Button>
-          </div>
-        </form>
+        <AuthForm mode="register" />
       </Card>
     </div>
   );

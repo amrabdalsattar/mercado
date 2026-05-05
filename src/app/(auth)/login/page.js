@@ -1,6 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { AuthForm } from "@/features/auth/components/auth-form";
 
 export const metadata = {
   title: "Login",
@@ -14,16 +13,10 @@ export default function LoginPage() {
           Sign in
         </p>
         <h1 className="mt-4 text-4xl font-semibold">Access your Mercado workspace.</h1>
-        <form className="mt-8 grid gap-4">
-          <Input type="email" placeholder="Email or phone" />
-          <Input type="password" placeholder="Password" />
-          <Button type="button" className="w-full">
-            Continue
-          </Button>
-        </form>
+        <AuthForm mode="login" />
         <p className="mt-5 text-sm leading-7 text-[var(--ink-700)]">
-          Auth providers and verification can plug into this screen without changing the layout
-          contract.
+          Authentication now uses a signed JWT cookie so the storefront, dashboards, cart, and
+          orders all share a real session boundary.
         </p>
       </Card>
     </div>
