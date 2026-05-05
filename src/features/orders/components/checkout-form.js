@@ -16,24 +16,45 @@ export function CheckoutForm({ userEmail = "" }) {
     setError("");
 
     const formData = new FormData(event.currentTarget);
-    const payload = Object.fromEntries(formData.entries());
+    const payload = {
+      fullName: String(formData.get("fullName") ?? "").trim(),
+      email: String(formData.get("email") ?? "").trim(),
+      street: String(formData.get("street") ?? "").trim(),
+      city: String(formData.get("city") ?? "").trim(),
+      state: String(formData.get("state") ?? "").trim(),
+      zip: String(formData.get("zip") ?? "").trim(),
+      country: String(formData.get("country") ?? "United States").trim() || "United States",
+    };
 
-    const response = await fetch("/api/orders", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-    const result = await response.json();
+      const result = await response.json();
 
-    if (!response.ok) {
-      setError(result.error?.message ?? "Unable to place order.");
+      if (!response.ok) {
+        const fieldErrors = result.error?.details?.fieldErrors;
+        const validationMessage = fieldErrors
+          ? Object.entries(fieldErrors)
+            .flatMap(([, messages]) => messages ?? [])
+            .filter(Boolean)
+            .join(" ")
+          : null;
+
+        setError(validationMessage || result.error?.message || "Unable to place order.");
+        return;
+      }
+
+      router.push("/orders");
+      router.refresh();
+    } catch (err) {
+      setError("Unable to place order.");
+    } finally {
       setPending(false);
-      return;
     }
-
-    router.push("/orders");
-    router.refresh();
   }
 
   return (

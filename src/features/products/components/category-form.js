@@ -15,28 +15,34 @@ export function CategoryForm() {
     setPending(true);
     setError("");
 
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
     const payload = {
-      name: formData.get("name"),
-      description: formData.get("description"),
+      name: String(formData.get("name") ?? "").trim(),
+      description: String(formData.get("description") ?? "").trim(),
     };
 
-    const response = await fetch("/api/categories", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    try {
+      const response = await fetch("/api/categories", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-    const result = await response.json();
+      const result = await response.json();
 
-    if (!response.ok) {
-      setError(result.error?.message ?? "Unable to create category.");
+      if (!response.ok) {
+        setError(result.error?.message ?? "Unable to create category.");
+        return;
+      }
+
+      form.reset();
+      router.refresh();
+    } catch (err) {
+      setError("Unable to create category.");
+    } finally {
       setPending(false);
-      return;
     }
-
-    event.currentTarget.reset();
-    router.refresh();
   }
 
   return (

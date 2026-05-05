@@ -81,11 +81,12 @@ export default async function CartPage() {
             </div>
           </div>
           <a
-            href="/checkout"
-            className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[var(--ink-900)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[var(--brand-deep)]"
-          >
-            Continue to checkout
-          </a>
+             href="/checkout"
+              className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[var(--ink-900)] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[var(--brand-deep)] [&]:text-white"
+      style={{ color: "white" }}
+>
+  Continue to checkout
+</a>
         </Card>
       </div>
     </div>

@@ -9,6 +9,7 @@ import {
 import { serializeCategory, serializeProduct } from "@/lib/serializers";
 import { safeDbCall } from "@/lib/safe-db";
 import { formatCompactNumber } from "@/lib/utils";
+import { getSession } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -26,11 +27,12 @@ const collections = [
   {
     title: "Track the commerce funnel",
     copy: "Catalog, cart, checkout, and order management now hang off persisted backend models.",
-    href: "/admin",
+    href: "/orders",
   },
 ];
 
 export default async function StoreHomePage() {
+  const session = await getSession();
   const featuredProducts = await safeDbCall(
     async () => (await listFeaturedProducts()).map(serializeProduct),
     []
@@ -59,12 +61,17 @@ export default async function StoreHomePage() {
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <Button as="link" href="/products">
-                Browse products
-              </Button>
-              <Button as="link" href="/admin" variant="secondary">
-                Open admin dashboard
-              </Button>
+              <div className="text-white">
+                <Button as="link" href="/products">
+                  Browse products
+                </Button>
+              </div>
+
+              {!session?.user ? (
+                <Button as="link" href="/register" variant="secondary">
+                  Create account
+                </Button>
+              ) : null}
             </div>
 
             <div className="grid gap-4 sm:grid-cols-3">

@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -50,6 +51,19 @@ export default async function ProductDetailPage({ params }) {
       <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
         <Card className="overflow-hidden rounded-[36px] bg-gradient-to-br from-[var(--surface-2)] via-white to-[var(--surface-1)] p-8">
           <div className="flex h-full min-h-[480px] flex-col justify-between">
+            {product.coverImage ? (
+              <div className="relative flex-1 mb-6 rounded-[24px] overflow-hidden">
+                <Image
+                  src={product.coverImage}
+                  alt={product.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
+                />
+              </div>
+            ) : null}
+
             <Badge className="w-fit bg-white/80">
               {product.featured ? "Featured" : "Product detail"}
             </Badge>

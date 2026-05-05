@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/utils";
@@ -13,9 +14,18 @@ export function ProductCard({ product }) {
     <Link href={`/products/${product.slug}`} className="group block h-full">
       <Card className="flex h-full flex-col overflow-hidden rounded-[30px]">
         <div
-          className={`min-h-56 ${product.coverImage ? "bg-[var(--surface-1)]" : `bg-gradient-to-br ${accent}`} p-6 transition duration-300 group-hover:scale-[1.01]`}
+          className={`min-h-56 ${product.coverImage ? "bg-[var(--surface-1)]" : `bg-gradient-to-br ${accent}`} p-6 transition duration-300 group-hover:scale-[1.01] relative`}
         >
-          <div className="flex h-full flex-col justify-between">
+          {product.coverImage ? (
+            <Image
+              src={product.coverImage}
+              alt={product.name}
+              fill
+              className="object-cover rounded-[24px]"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          ) : null}
+          <div className="flex h-full flex-col justify-between relative z-10">
             <Badge className="w-fit bg-white/80">
               {product.featured ? "Featured" : "Live"}
             </Badge>

@@ -13,26 +13,32 @@ export function AddToCartButton({ productId }) {
     setPending(true);
     setError("");
 
-    const response = await fetch("/api/cart/items", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ productId, quantity: 1 }),
-    });
+    try {
+      const response = await fetch("/api/cart/items", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId, quantity: 1 }),
+      });
 
-    const result = await response.json();
+      const result = await response.json();
 
-    if (!response.ok) {
-      if (response.status === 401) {
-        router.push("/login");
+      if (!response.ok) {
+        if (response.status === 401) {
+          await router.push("/login");
+          return;
+        }
+
+        setError(result.error?.message ?? "Unable to add this item.");
         return;
       }
-      setError(result.error?.message ?? "Unable to add this item.");
-      setPending(false);
-      return;
-    }
 
-    router.push("/cart");
-    router.refresh();
+      await router.push("/cart");
+      router.refresh();
+    } catch (err) {
+      setError("Unable to add this item.");
+    } finally {
+      setPending(false);
+    }
   }
 
   return (

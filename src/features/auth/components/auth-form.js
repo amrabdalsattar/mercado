@@ -43,7 +43,15 @@ export function AuthForm({ mode }) {
       return;
     }
 
-    router.push(mode === "register" ? "/verify" : "/");
+    if (mode === "register") {
+      router.push("/verify");
+    } else if (result.data?.role === "ADMIN") {
+      router.push("/admin");
+    } else if (result.data?.role === "SELLER") {
+      router.push("/seller");
+    } else {
+      router.push("/");
+    }
     router.refresh();
   }
 

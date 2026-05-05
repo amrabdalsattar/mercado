@@ -19,7 +19,7 @@ export async function connectDB() {
     const mongoUri = getMongoUri();
     globalForMongoose.__mongoose.promise = mongoose
       .connect(mongoUri, {
-        autoIndex: false,
+        autoIndex: process.env.NODE_ENV !== "production",
         bufferCommands: false,
       })
       .then((mongooseInstance) => mongooseInstance);

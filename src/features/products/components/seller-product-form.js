@@ -15,7 +15,8 @@ export function SellerProductForm({ categories }) {
     setPending(true);
     setError("");
 
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
     const payload = {
       name: formData.get("name"),
       description: formData.get("description"),
@@ -27,22 +28,35 @@ export function SellerProductForm({ categories }) {
       featured: formData.get("featured") === "on",
     };
 
-    const response = await fetch("/api/products", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    try {
+      const response = await fetch("/api/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-    const result = await response.json();
+      const result = await response.json();
 
-    if (!response.ok) {
-      setError(result.error?.message ?? "Unable to create product.");
+      if (!response.ok) {
+        const fieldErrors = result.error?.details?.fieldErrors;
+        const validationMessage = fieldErrors
+          ? Object.entries(fieldErrors)
+            .flatMap(([, messages]) => messages ?? [])
+            .filter(Boolean)
+            .join(" ")
+          : null;
+
+        setError(validationMessage || result.error?.message || "Unable to create product.");
+        return;
+      }
+
+      form.reset();
+      router.refresh();
+    } catch (err) {
+      setError("Unable to create product.");
+    } finally {
       setPending(false);
-      return;
     }
-
-    event.currentTarget.reset();
-    router.refresh();
   }
 
   return (

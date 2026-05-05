@@ -9,7 +9,6 @@ const links = [
   { href: "/cart", label: "Cart" },
   { href: "/orders", label: "Orders" },
   { href: "/seller", label: "Seller" },
-  { href: "/admin", label: "Admin" },
 ];
 
 export async function SiteHeader() {
@@ -37,7 +36,10 @@ export async function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-5 lg:flex">
-          {links.map((link) => (
+          {(session?.user?.role === "CUSTOMER"
+            ? links.filter((link) => link.href !== "/seller")
+            : links
+          ).map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -57,13 +59,16 @@ export async function SiteHeader() {
               <LogoutButton />
             </>
           ) : (
-            <Button as="link" href="/login" variant="ghost">
-              Sign in
-            </Button>
+            <>
+              <Button as="link" href="/register" variant="ghost">
+                Sign up
+              </Button>
+              <Button as="link" href="/login" variant="secondary">
+                Sign in
+              </Button>
+            </>
           )}
-          <Button as="link" href="/checkout">
-            Checkout
-          </Button>
+
         </div>
       </div>
     </header>
