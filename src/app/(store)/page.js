@@ -61,7 +61,7 @@ export default async function StoreHomePage() {
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <div className="text-white">
+              <div className="text-white bg-(--ink-900) rounded-3xl">
                 <Button as="link" href="/products">
                   Shop now
                 </Button>

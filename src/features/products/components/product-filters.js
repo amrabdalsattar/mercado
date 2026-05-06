@@ -57,10 +57,12 @@ export function ProductFilters({ filters, categories }) {
             <option value="100-300">$100 - $300</option>
           </select>
         </div>
+        <div className="text-white bg-(--ink-900) rounded-3xl w-35 text-center">
+          <Button type="submit" className="lg:justify-self-start">
+            Apply filters
+          </Button>
+        </div>
 
-        <Button type="submit" className="lg:justify-self-start">
-          Apply filters
-        </Button>
       </form>
     </Card>
   );
