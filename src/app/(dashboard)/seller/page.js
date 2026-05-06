@@ -11,7 +11,7 @@ import { serializeCategory, serializeProduct } from "@/lib/serializers";
 import { formatCurrency } from "@/lib/utils";
 
 export const metadata = {
-  title: "Seller",
+  title: "Seller Dashboard — Mercado",
 };
 
 export const dynamic = "force-dynamic";
@@ -29,18 +29,23 @@ export default async function SellerPage() {
     (sum, product) => sum + (product.salePrice ?? product.price) * product.stock,
     0
   );
+
+  const activeListings = serializedProducts.filter((p) => p.isActive).length;
+  const outOfStock = serializedProducts.filter((p) => p.stock === 0).length;
+
   const metrics = [
-    { label: "Catalog value", value: formatCurrency(revenueEstimate), hint: "Inventory x price" },
-    { label: "Listings", value: String(serializedProducts.length), hint: "Owned by your account" },
-    { label: "Categories", value: String(serializedCategories.length), hint: "Available for assignment" },
-    { label: "Status", value: user.role, hint: "JWT-protected session" },
+    { label: "Estimated inventory value", value: formatCurrency(revenueEstimate), hint: "Based on current stock × price" },
+    { label: "Total listings", value: String(serializedProducts.length), hint: `${activeListings} active` },
+    { label: "Out of stock", value: String(outOfStock), hint: outOfStock > 0 ? "Needs restocking" : "All stocked up" },
+    { label: "Account type", value: "Seller", hint: "Verified seller account" },
   ];
 
   return (
     <div className="shell py-12">
       <SectionHeading
-        eyebrow="Seller workspace"
-        title="Inventory, sales, and fulfillment surfaces for marketplace vendors."
+        eyebrow="Seller dashboard"
+        title={`Welcome back, ${user.name?.split(" ")[0] || "there"}.`}
+        copy="Manage your listings, track your inventory, and add new products — all from one place."
       />
 
       <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
@@ -50,48 +55,65 @@ export default async function SellerPage() {
       </div>
 
       <div className="mt-10 grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
-      <Card className="p-6">
-        <h2 className="text-2xl font-semibold">Catalog snapshot</h2>
-        <div className="mt-5 grid gap-4">
-          {serializedProducts.length ? (
-            serializedProducts.map((product) => (
-              <div
-                key={product.id}
-                className="grid gap-3 rounded-2xl border border-[var(--line)] bg-white/60 px-4 py-4 sm:grid-cols-[1fr_auto_auto]"
-              >
-                <div>
-                  <p className="font-semibold">{product.name}</p>
-                  <p className="text-sm text-[var(--ink-700)]">
-                    {product.stock} in stock • {product.category || "Unassigned"}
-                  </p>
-                </div>
-                <p className="text-sm font-medium">
-                  {formatCurrency(product.salePrice ?? product.price)}
-                </p>
-                <a
-                  href={`/products/${product.slug}`}
-                  className="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-medium text-center"
+        <Card className="p-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-semibold">Your listings</h2>
+            <span className="text-sm text-[var(--ink-500)]">
+              {serializedProducts.length} {serializedProducts.length === 1 ? "product" : "products"}
+            </span>
+          </div>
+
+          <div className="mt-5 grid gap-4">
+            {serializedProducts.length ? (
+              serializedProducts.map((product) => (
+                <div
+                  key={product.id}
+                  className="grid gap-3 rounded-2xl border border-[var(--line)] bg-white/60 px-4 py-4 sm:grid-cols-[1fr_auto_auto]"
                 >
-                  View listing
-                </a>
+                  <div>
+                    <p className="font-semibold">{product.name}</p>
+                    <p className="text-sm text-[var(--ink-700)]">
+                      {product.stock > 0 ? (
+                        <span>{product.stock} in stock</span>
+                      ) : (
+                        <span className="text-red-500">Out of stock</span>
+                      )}
+                      {" • "}
+                      {product.category || "No category"}
+                    </p>
+                  </div>
+                  <p className="text-sm font-medium">
+                    {formatCurrency(product.salePrice ?? product.price)}
+                  </p>
+                  <a
+                    href={`/products/${product.slug}`}
+                    className="rounded-full border border-[var(--line)] px-4 py-2 text-center text-sm font-medium transition hover:border-[var(--ink-900)] hover:text-[var(--ink-900)]"
+                  >
+                    View listing
+                  </a>
+                </div>
+              ))
+            ) : (
+              <div className="rounded-2xl border border-dashed border-[var(--line)] p-8 text-center">
+                <p className="font-semibold text-[var(--ink-900)]">No listings yet</p>
+                <p className="mt-2 text-sm leading-7 text-[var(--ink-700)]">
+                  Use the form on the right to create your first product. It&apso;ll show up in the
+                  store instantly.
+                </p>
               </div>
-            ))
-          ) : (
-            <Card className="p-5 text-[var(--ink-700)]">
-              You have not created any products yet.
-            </Card>
-          )}
-        </div>
-      </Card>
-      <Card className="p-6">
-        <h2 className="text-2xl font-semibold">Create product</h2>
-        <p className="mt-3 text-sm leading-7 text-[var(--ink-700)]">
-          This form writes directly to the catalog and appears immediately in the storefront.
-        </p>
-        <div className="mt-5">
-          <SellerProductForm categories={serializedCategories} />
-        </div>
-      </Card>
+            )}
+          </div>
+        </Card>
+
+        <Card className="p-6">
+          <h2 className="text-2xl font-semibold">Add a new product</h2>
+          <p className="mt-3 text-sm leading-7 text-[var(--ink-700)]">
+            Fill in the details below and your product will go live in the store right away.
+          </p>
+          <div className="mt-5">
+            <SellerProductForm categories={serializedCategories} />
+          </div>
+        </Card>
       </div>
     </div>
   );

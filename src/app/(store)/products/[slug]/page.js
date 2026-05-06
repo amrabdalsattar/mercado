@@ -21,11 +21,11 @@ export async function generateMetadata({ params }) {
   const product = await safeDbCall(async () => getProductBySlug(slug), null);
 
   if (!product) {
-    return { title: "Product not found" };
+    return { title: "Product not found — Mercado" };
   }
 
   return {
-    title: product.name,
+    title: `${product.name} — Mercado`,
     description: product.description,
   };
 }
@@ -45,6 +45,9 @@ export default async function ProductDetailPage({ params }) {
     []
   );
   const price = product.salePrice ?? product.price;
+  const discount = product.salePrice
+    ? Math.round(((product.price - product.salePrice) / product.price) * 100)
+    : null;
 
   return (
     <div className="shell py-12">
@@ -52,7 +55,7 @@ export default async function ProductDetailPage({ params }) {
         <Card className="overflow-hidden rounded-[36px] bg-gradient-to-br from-[var(--surface-2)] via-white to-[var(--surface-1)] p-8">
           <div className="flex h-full min-h-[480px] flex-col justify-between">
             {product.coverImage ? (
-              <div className="relative flex-1 mb-6 rounded-[24px] overflow-hidden">
+              <div className="relative mb-6 flex-1 overflow-hidden rounded-[24px]">
                 <Image
                   src={product.coverImage}
                   alt={product.name}
@@ -65,11 +68,11 @@ export default async function ProductDetailPage({ params }) {
             ) : null}
 
             <Badge className="w-fit bg-white/80">
-              {product.featured ? "Featured" : "Product detail"}
+              {product.featured ? "⭐ Featured pick" : product.category || "Product"}
             </Badge>
             <div className="space-y-3">
               <p className="text-sm uppercase tracking-[0.22em] text-[var(--ink-700)]">
-                {product.category || "Catalog"}
+                {product.category || "General"}
               </p>
               <h1 className="max-w-xl text-5xl font-semibold tracking-tight text-balance">
                 {product.name}
@@ -81,16 +84,31 @@ export default async function ProductDetailPage({ params }) {
         <div className="grid gap-6">
           <Card className="p-7">
             <div className="flex flex-wrap items-center gap-3">
-              <Badge>{product.category}</Badge>
-              <Badge>{product.stock} units available</Badge>
-              <Badge>{product.rating} star average</Badge>
+              {product.category ? <Badge>{product.category}</Badge> : null}
+              {product.stock > 0 ? (
+                <Badge className="bg-green-50 text-green-700">
+                  {product.stock} in stock
+                </Badge>
+              ) : (
+                <Badge className="bg-red-50 text-red-600">Out of stock</Badge>
+              )}
+              {product.ratings?.average > 0 ? (
+                <Badge>⭐ {product.ratings.average} / 5</Badge>
+              ) : null}
+              {discount ? (
+                <Badge className="bg-orange-50 text-orange-600">{discount}% off</Badge>
+              ) : null}
             </div>
-            <p className="mt-5 text-4xl font-semibold">{formatCurrency(price)}</p>
-            {product.salePrice ? (
-              <p className="mt-1 text-base text-[var(--ink-500)] line-through">
-                {formatCurrency(product.price)}
-              </p>
-            ) : null}
+
+            <div className="mt-5 flex items-end gap-3">
+              <p className="text-4xl font-semibold">{formatCurrency(price)}</p>
+              {product.salePrice ? (
+                <p className="mb-1 text-base text-[var(--ink-500)] line-through">
+                  {formatCurrency(product.price)}
+                </p>
+              ) : null}
+            </div>
+
             <p className="mt-5 text-base leading-8 text-[var(--ink-700)]">
               {product.description}
             </p>
@@ -101,18 +119,28 @@ export default async function ProductDetailPage({ params }) {
                 Buy now
               </Button>
             </div>
+
+            <p className="mt-4 text-xs text-[var(--ink-500)]">
+              Secure checkout — your payment info is always protected.
+            </p>
           </Card>
 
           <Card className="p-7">
             <p className="text-sm uppercase tracking-[0.2em] text-[var(--brand-deep)]">
-              Product specs
+              Product details
             </p>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               {[
-                `${product.stock} units in stock`,
-                product.category || "Unassigned category",
-                product.sellerName || "Marketplace seller",
-                product.featured ? "Featured merchandising slot" : "Standard catalog slot",
+                product.stock > 0
+                  ? `✓ ${product.stock} units available`
+                  : "✗ Currently out of stock",
+                product.category
+                  ? `Category: ${product.category}`
+                  : "Category: General",
+                `Sold by: ${product.sellerName || "Mercado seller"}`,
+                product.featured
+                  ? "⭐ Featured product"
+                  : "✓ Verified listing",
               ].map((spec) => (
                 <div
                   key={spec}
@@ -126,12 +154,14 @@ export default async function ProductDetailPage({ params }) {
 
           <Card className="p-7">
             <p className="text-sm uppercase tracking-[0.2em] text-[var(--brand-deep)]">
-              Seller snapshot
+              About the seller
             </p>
-            <h2 className="mt-4 text-2xl font-semibold">{product.sellerName}</h2>
+            <h2 className="mt-4 text-2xl font-semibold">
+              {product.sellerName || "Mercado seller"}
+            </h2>
             <p className="mt-2 text-sm leading-7 text-[var(--ink-700)]">
-              This listing belongs to a persisted seller account and is ready for richer profile,
-              fulfillment, and marketplace policy data.
+              This product is sold by a verified seller on Mercado. All listings
+              are reviewed to ensure quality and accuracy before going live.
             </p>
           </Card>
         </div>
@@ -139,8 +169,8 @@ export default async function ProductDetailPage({ params }) {
 
       <section className="mt-20">
         <SectionHeading
-          eyebrow="Related products"
-          title="Cross-sell slots with a reusable product-card surface."
+          eyebrow="You might also like"
+          title="More products from this category."
         />
         {relatedProducts.length ? (
           <div className="mt-8 grid gap-6 md:grid-cols-3">
@@ -150,7 +180,7 @@ export default async function ProductDetailPage({ params }) {
           </div>
         ) : (
           <Card className="mt-8 p-6 text-[var(--ink-700)]">
-            More products will appear here once this category has additional inventory.
+            No related products yet — check back soon as more items are added.
           </Card>
         )}
       </section>

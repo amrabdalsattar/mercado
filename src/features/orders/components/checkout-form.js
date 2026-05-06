@@ -23,7 +23,7 @@ export function CheckoutForm({ userEmail = "" }) {
       city: String(formData.get("city") ?? "").trim(),
       state: String(formData.get("state") ?? "").trim(),
       zip: String(formData.get("zip") ?? "").trim(),
-      country: String(formData.get("country") ?? "United States").trim() || "United States",
+      country: String(formData.get("country") ?? "Egypt").trim() || "Egypt",
     };
 
     try {
@@ -69,7 +69,7 @@ export function CheckoutForm({ userEmail = "" }) {
         <Input name="state" placeholder="State" required />
         <Input name="zip" placeholder="ZIP code" required />
       </div>
-      <Input name="country" placeholder="Country" defaultValue="United States" required />
+      <Input name="country" placeholder="Country" defaultValue="Egypt" required />
       {error ? <p className="text-sm text-red-600">{error}</p> : null}
       <Button type="submit" className="w-full sm:w-fit" disabled={pending}>
         {pending ? "Placing order..." : "Place order"}

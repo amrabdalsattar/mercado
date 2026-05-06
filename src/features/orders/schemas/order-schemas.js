@@ -7,7 +7,7 @@ export const orderCreateSchema = z.object({
   city: z.string().trim().min(2),
   state: z.string().trim().min(2),
   zip: z.string().trim().min(3),
-  country: z.string().trim().min(2).default("United States"),
+  country: z.string().trim().min(2).default("Egypt"),
 });
 
 export const orderStatusSchema = z.object({

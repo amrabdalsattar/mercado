@@ -7,7 +7,7 @@ import { serializeCategory, serializeProduct } from "@/lib/serializers";
 import { safeDbCall } from "@/lib/safe-db";
 
 export const metadata = {
-  title: "Products",
+  title: "Shop All Products — Mercado",
 };
 
 export const dynamic = "force-dynamic";
@@ -34,25 +34,34 @@ export default async function ProductsPage({ searchParams }) {
   return (
     <div className="shell py-12">
       <SectionHeading
-        eyebrow="Catalog"
-        title="Searchable inventory with clean server-side filters."
-        copy="This route is shaped for eventual database-backed pagination and richer filters while staying simple and readable today."
+        eyebrow="All products"
+        title="Find exactly what you're looking for."
+        copy="Browse our full catalog and use the filters below to narrow things down by category, price, or availability."
       />
 
       <div className="mt-8 grid gap-6">
         <ProductFilters filters={filters} categories={categories} />
 
         <Card className="flex items-center justify-between gap-4 p-5 text-sm text-[var(--ink-700)]">
-          <p>{products.length} products matched your filters.</p>
-          <p>Sort: {filters.sort.replace("-", " ")}</p>
+          <p>
+            {products.length > 0
+              ? `Showing ${products.length} ${products.length === 1 ? "product" : "products"}`
+              : "No products found"}
+            {filters.q ? ` for "${filters.q}"` : ""}
+            {filters.category ? ` in ${filters.category.replace(/-/g, " ")}` : ""}
+          </p>
+          <p className="capitalize">Sorted by: {filters.sort.replace("-", " ")}</p>
         </Card>
 
         {products.length ? (
           <ProductsGrid products={products} />
         ) : (
-          <Card className="p-6 text-[var(--ink-700)]">
-            No products matched your current filters. If this is a fresh install, create one from
-            the seller dashboard first.
+          <Card className="p-10 text-center text-[var(--ink-700)]">
+            <p className="text-lg font-semibold text-[var(--ink-900)]">No products found</p>
+            <p className="mt-2 text-sm leading-7">
+              We couldn&apos;t find anything matching your search. Try adjusting your filters or
+              searching for something different.
+            </p>
           </Card>
         )}
       </div>
