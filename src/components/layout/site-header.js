@@ -24,11 +24,11 @@ export async function SiteHeader() {
     <header className="sticky top-0 z-20 border-b border-black/5 bg-[rgba(245,239,228,0.75)] backdrop-blur-xl">
       <div className="shell flex items-center justify-between gap-4 py-4">
         <Link href="/" className="flex items-center gap-3">
-          <div className="grid h-11 w-11 place-items-center rounded-2xl bg-(--ink-900)] text-sm font-bold text-white">
+          <div className="grid h-11 w-11 place-items-center rounded-2xl bg-[var(--ink-900)] text-sm font-bold text-white">
             M
           </div>
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-(--ink-500)]">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--ink-500)]">
               Mercado
             </p>
             <p className="text-base font-semibold">Commerce System</p>
@@ -43,7 +43,7 @@ export async function SiteHeader() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-(--ink-700)] transition hover:text-(--ink-900)]"
+              className="text-sm font-medium text-[var(--ink-700)] transition hover:text-[var(--ink-900)]"
             >
               {link.label}
             </Link>

@@ -22,7 +22,7 @@ export function AdminOrderStatusForm({ orderId, currentStatus }) {
       defaultValue={currentStatus}
       disabled={pending}
       onChange={handleChange}
-      className="rounded-full border border-(--line)] bg-white px-4 py-2 text-sm font-medium"
+      className="rounded-full border-[var(--line)] bg-white px-4 py-2 text-sm font-medium"
     >
       <option value="PENDING">Pending</option>
       <option value="PROCESSING">Processing</option>

@@ -53,12 +53,12 @@ export default async function AdminPage() {
             {orders.map((order) => (
               <div
                 key={order._id.toString()}
-                className="rounded-2xl border border-(--line) bg-white/60 px-4 py-4"
+                className="rounded-2xl border-[var(--line)] bg-white/60 px-4 py-4"
               >
                 <div className="flex items-center justify-between gap-3">
                   <div>
                     <p className="font-semibold">{order._id.toString()}</p>
-                    <p className="text-sm text-(--ink-700)">
+                    <p className="text-sm text-[var(--ink-700)]">
                       {order.user?.name || order.shippingAddress.fullName} • {order.status}
                     </p>
                   </div>

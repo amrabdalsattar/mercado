@@ -144,7 +144,7 @@ export default async function ProductDetailPage({ params }) {
               ].map((spec) => (
                 <div
                   key={spec}
-                  className="rounded-2xl border border-(--line) bg-white/60 px-4 py-3 text-sm"
+                  className="rounded-2xl border-[var(--line)] bg-white/60 px-4 py-3 text-sm"
                 >
                   {spec}
                 </div>

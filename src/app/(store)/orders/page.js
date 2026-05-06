@@ -93,7 +93,7 @@ export default async function OrdersPage() {
             </p>
             <Link
               href="/products"
-              className="mt-6 inline-flex items-center justify-center rounded-full border border-(--ink-900) px-5 py-2.5 text-sm font-semibold text-(--ink-900) transition hover:bg-(--ink-900) hover:text-white!"
+              className="mt-6 inline-flex items-center justify-center rounded-full border-[var(--ink-900)] px-5 py-2.5 text-sm font-semibold text-[var(--ink-900)] transition hover:bg-[var(--ink-900)] hover:text-white!"
             >
               Start shopping
             </Link>

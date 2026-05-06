@@ -28,7 +28,7 @@ export default async function CheckoutPage() {
         <div className="grid gap-4 h-fit">
           <Card className="p-6">
             <h2 className="text-lg font-semibold">You&aos;re in safe hands</h2>
-            <div className="mt-4 grid gap-3 text-sm leading-7 text-(--ink-700)">
+            <div className="mt-4 grid gap-3 text-sm leading-7 text-[var(--ink-700)]">
               <div className="flex items-start gap-3">
                 <span className="mt-0.5 text-green-500">✓</span>
                 <p>Your payment is encrypted and processed securely via Stripe.</p>
@@ -50,7 +50,7 @@ export default async function CheckoutPage() {
 
           <Card className="p-6">
             <h2 className="text-lg font-semibold">Delivery & returns</h2>
-            <div className="mt-4 grid gap-3 text-sm leading-7 text-(--ink-700)">
+            <div className="mt-4 grid gap-3 text-sm leading-7 text-[var(--ink-700)]">
               <p>🚚 Standard delivery in 3–5 business days.</p>
               <p>⚡ Express options available at checkout.</p>
               <p>↩️ Easy returns within 30 days of delivery.</p>

@@ -63,7 +63,7 @@ export function AuthForm({ mode }) {
         <select
           name="role"
           defaultValue="CUSTOMER"
-          className="rounded-2xl border border-(--line)] bg-white/80 px-4 py-3 text-sm outline-none"
+          className="rounded-2xl border-[var(--line)] bg-white/80 px-4 py-3 text-sm outline-none"
         >
           <option value="CUSTOMER">Customer</option>
           <option value="SELLER">Seller</option>

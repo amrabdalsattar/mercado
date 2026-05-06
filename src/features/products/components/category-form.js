@@ -51,7 +51,7 @@ export function CategoryForm() {
       <textarea
         name="description"
         placeholder="Description"
-        className="min-h-24 rounded-2xl border border-(--line)] bg-white/80 px-4 py-3 text-sm outline-none"
+        className="min-h-24 rounded-2xl border-[var(--line)] bg-white/80 px-4 py-3 text-sm outline-none"
       />
       {error ? <p className="text-sm text-red-600">{error}</p> : null}
       <Button type="submit" disabled={pending}>

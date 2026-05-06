@@ -66,7 +66,7 @@ export function SellerProductForm({ categories }) {
         name="description"
         placeholder="Description"
         required
-        className="min-h-28 rounded-2xl border border-(--line)] bg-white/80 px-4 py-3 text-sm outline-none"
+        className="min-h-28 rounded-2xl border-[var(--line)] bg-white/80 px-4 py-3 text-sm outline-none"
       />
       <div className="grid gap-4 sm:grid-cols-3">
         <Input name="price" type="number" min="0" step="0.01" placeholder="Price" required />
@@ -76,7 +76,7 @@ export function SellerProductForm({ categories }) {
       <select
         name="categoryId"
         required
-        className="rounded-2xl border border-(--line)] bg-white/80 px-4 py-3 text-sm outline-none"
+        className="rounded-2xl border-[var(--line)] bg-white/80 px-4 py-3 text-sm outline-none"
       >
         <option value="">Select category</option>
         {categories.map((category) => (
@@ -86,7 +86,7 @@ export function SellerProductForm({ categories }) {
         ))}
       </select>
       <Input name="coverImage" placeholder="Cover image URL (optional)" />
-      <label className="flex items-center gap-2 text-sm text-(--ink-700)]">
+      <label className="flex items-center gap-2 text-sm text-[var(--ink-700)]">
         <input type="checkbox" name="featured" />
         Mark as featured
       </label>

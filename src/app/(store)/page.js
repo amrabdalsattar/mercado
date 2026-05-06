@@ -48,20 +48,20 @@ export default async function StoreHomePage() {
         <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="space-y-8">
             <div className="space-y-5">
-              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-(--brand-deep)]">
+              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[var(--brand-deep)]">
                 Your everyday marketplace
               </p>
               <h1 className="max-w-3xl text-5xl font-semibold tracking-tight text-balance sm:text-6xl">
                 Everything you need, all in one place.
               </h1>
-              <p className="max-w-2xl text-lg leading-8 text-(--ink-700)]">
+              <p className="max-w-2xl text-lg leading-8 text-[var(--ink-700)]">
                 Shop from hundreds of sellers, discover great deals, and get your orders delivered
                 fast. Whether you&apos;re buying or selling — Mercado makes it simple.
               </p>
             </div>
 
             <div className="flex flex-wrap gap-3">
-              <div className="text-white bg-(--ink-900) rounded-3xl">
+              <div className="text-white bg-[var(--ink-900)] rounded-3xl">
                 <Button as="link" href="/products">
                   Shop now
                 </Button>
@@ -81,7 +81,7 @@ export default async function StoreHomePage() {
                 { label: "Categories to explore", value: categories.length || "0" },
               ].map((item) => (
                 <Card key={item.label} className="p-5">
-                  <p className="text-sm text-(--ink-500)]">{item.label}</p>
+                  <p className="text-sm text-[var(--ink-500)]">{item.label}</p>
                   <p className="mt-2 text-2xl font-semibold">{item.value}</p>
                 </Card>
               ))}
@@ -131,9 +131,9 @@ export default async function StoreHomePage() {
         <div className="mt-8 grid gap-6 lg:grid-cols-3">
           {collections.map((collection, index) => (
             <Card key={collection.title} className="p-6">
-              <p className="text-sm text-(--ink-500)]">0{index + 1}</p>
+              <p className="text-sm text-[var(--ink-500)]">0{index + 1}</p>
               <h3 className="mt-4 text-2xl font-semibold">{collection.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-(--ink-700)]">{collection.copy}</p>
+              <p className="mt-3 text-sm leading-7 text-[var(--ink-700)]">{collection.copy}</p>
               <Button as="link" href={collection.href} variant="ghost" className="mt-6 px-0">
                 Learn more
               </Button>
@@ -154,7 +154,7 @@ export default async function StoreHomePage() {
             ))}
           </div>
         ) : (
-          <Card className="mt-8 p-6 text-(--ink-700)]">
+          <Card className="mt-8 p-6 text-[var(--ink-700)]">
             No featured products yet — check back soon or browse all categories.
           </Card>
         )}
@@ -169,18 +169,18 @@ export default async function StoreHomePage() {
           <div className="mt-8 grid gap-6 md:grid-cols-3">
             {categories.map((category) => (
               <Card key={category.id} className="p-6">
-                <p className="text-sm uppercase tracking-[0.2em] text-(--brand-deep)]">
+                <p className="text-sm uppercase tracking-[0.2em] text-[var(--brand-deep)]">
                   {category.slug.replace(/-/g, " ")}
                 </p>
                 <h3 className="mt-4 text-2xl font-semibold">{category.name}</h3>
-                <p className="mt-3 text-sm leading-7 text-(--ink-700)]">
+                <p className="mt-3 text-sm leading-7 text-[var(--ink-700)]">
                   {category.description || "Explore products in this category."}
                 </p>
               </Card>
             ))}
           </div>
         ) : (
-          <Card className="mt-8 p-6 text-(--ink-700)]">
+          <Card className="mt-8 p-6 text-[var(--ink-700)]">
             Categories are on their way — come back soon!
           </Card>
         )}

@@ -63,7 +63,7 @@ export default async function CartPage() {
               </p>
               <Link
                 href="/products"
-                className="mt-6 inline-flex items-center justify-center rounded-full border border-(--ink-900) px-5 py-2.5 text-sm font-semibold text-(--ink-900)"
+                className="mt-6 inline-flex items-center justify-center rounded-full border-[var(--ink-900)] px-5 py-2.5 text-sm font-semibold text-[var(--ink-900)]"
               >
                 Browse products
               </Link>
@@ -86,7 +86,7 @@ export default async function CartPage() {
               <span>Tax (8%)</span>
               <span>{formatCurrency(tax)}</span>
             </div>
-            <div className="mt-2 flex justify-between border-t border-(--line) pt-4 text-base font-semibold text-(--ink-900)">
+            <div className="mt-2 flex justify-between border-t border-[var(--line)] pt-4 text-base font-semibold text-[var(--ink-900)]">
               <span>Total</span>
               <span>{formatCurrency(total)}</span>
             </div>
@@ -94,12 +94,12 @@ export default async function CartPage() {
 
           <a
             href="/checkout"
-            className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-(--ink-900) px-5 py-3 text-sm font-semibold text-white! transition hover:bg-(--brand-deep)"
+            className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[var(--ink-900)] px-5 py-3 text-sm font-semibold text-white! transition hover:bg-[var(--brand-deep)]"
           >
             Continue to checkout
           </a>
 
-          <p className="mt-4 text-center text-xs text-(--ink-500)">
+          <p className="mt-4 text-center text-xs text-[var(--ink-500)]">
             Secure checkout — your payment info is always protected.
           </p>
         </Card>

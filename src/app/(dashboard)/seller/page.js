@@ -68,11 +68,11 @@ export default async function SellerPage() {
               serializedProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="grid gap-3 rounded-2xl border border-(--line) bg-white/60 px-4 py-4 sm:grid-cols-[1fr_auto_auto]"
+                  className="grid gap-3 rounded-2xl border-[var(--line)] bg-white/60 px-4 py-4 sm:grid-cols-[1fr_auto_auto]"
                 >
                   <div>
                     <p className="font-semibold">{product.name}</p>
-                    <p className="text-sm text-(--ink-700)">
+                    <p className="text-sm text-[var(--ink-700)]">
                       {product.stock > 0 ? (
                         <span>{product.stock} in stock</span>
                       ) : (
@@ -87,16 +87,16 @@ export default async function SellerPage() {
                   </p>
                   <a
                     href={`/products/${product.slug}`}
-                    className="rounded-full border border-(--line) px-4 py-2 text-center text-sm font-medium transition hover:border-(--ink-900)] hover:text-(--ink-900)]"
+                    className="rounded-full border-[var(--line)] px-4 py-2 text-center text-sm font-medium transition hover:border-[var(--ink-900)] hover:text-[var(--ink-900)]"
                   >
                     View listing
                   </a>
                 </div>
               ))
             ) : (
-              <div className="rounded-2xl border border-dashed border-(--line) p-8 text-center">
-                <p className="font-semibold text-(--ink-900)">No listings yet</p>
-                <p className="mt-2 text-sm leading-7 text-(--ink-700)">
+              <div className="rounded-2xl border border-dashed border-[var(--line)] p-8 text-center">
+                <p className="font-semibold text-[var(--ink-900)]">No listings yet</p>
+                <p className="mt-2 text-sm leading-7 text-[var(--ink-700)]">
                   Use the form on the right to create your first product. It&apso;ll show up in the
                   store instantly.
                 </p>
@@ -107,7 +107,7 @@ export default async function SellerPage() {
 
         <Card className="p-6">
           <h2 className="text-2xl font-semibold">Add a new product</h2>
-          <p className="mt-3 text-sm leading-7 text-(--ink-700)">
+          <p className="mt-3 text-sm leading-7 text-[var(--ink-700)]">
             Fill in the details below and your product will go live in the store right away.
           </p>
           <div className="mt-5">
