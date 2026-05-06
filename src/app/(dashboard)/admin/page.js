@@ -53,12 +53,12 @@ export default async function AdminPage() {
             {orders.map((order) => (
               <div
                 key={order._id.toString()}
-                className="rounded-2xl border border-[var(--line)] bg-white/60 px-4 py-4"
+                className="rounded-2xl border border-(--line) bg-white/60 px-4 py-4"
               >
                 <div className="flex items-center justify-between gap-3">
                   <div>
                     <p className="font-semibold">{order._id.toString()}</p>
-                    <p className="text-sm text-[var(--ink-700)]">
+                    <p className="text-sm text-(--ink-700)">
                       {order.user?.name || order.shippingAddress.fullName} • {order.status}
                     </p>
                   </div>
@@ -74,7 +74,7 @@ export default async function AdminPage() {
 
         <Card className="p-6">
           <h2 className="text-2xl font-semibold">Create category</h2>
-          <p className="mt-3 text-sm leading-7 text-[var(--ink-700)]">
+          <p className="mt-3 text-sm leading-7 text-[--ink-700)]">
             This form now persists category data instead of rendering a static dashboard tile.
           </p>
           <div className="mt-5">

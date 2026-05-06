@@ -55,13 +55,13 @@ export default async function OrdersPage() {
             <Card key={order.id} className="p-6">
               <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
                 <div>
-                  <p className="font-mono text-xs text-[var(--ink-500)]">
+                  <p className="font-mono text-xs text-(--ink-500)">
                     Order #{order.id.slice(-8).toUpperCase()}
                   </p>
                   <h2 className="mt-3 text-2xl font-semibold">
                     {order.shippingAddress.fullName}
                   </h2>
-                  <p className="mt-2 text-sm text-[var(--ink-700)]">
+                  <p className="mt-2 text-sm text-(--ink-700)">
                     Placed on {formatDate(order.createdAt)} •{" "}
                     {order.items.length} {order.items.length === 1 ? "item" : "items"}
                   </p>
@@ -87,13 +87,13 @@ export default async function OrdersPage() {
           ))
         ) : (
           <Card className="p-10 text-center">
-            <p className="text-lg font-semibold text-[var(--ink-900)]">No orders yet</p>
-            <p className="mt-2 text-sm leading-7 text-[var(--ink-700)]">
+            <p className="text-lg font-semibold text-(--ink-900)">No orders yet</p>
+            <p className="mt-2 text-sm leading-7 text-(--ink-700)">
               You haven&apos;t placed any orders yet. Once you do, you&apos;ll be able to track them right here.
             </p>
             <Link
               href="/products"
-              className="mt-6 inline-flex items-center justify-center rounded-full border border-[var(--ink-900)] px-5 py-2.5 text-sm font-semibold text-[var(--ink-900)] transition hover:bg-[var(--ink-900)] hover:!text-white"
+              className="mt-6 inline-flex items-center justify-center rounded-full border border-(--ink-900) px-5 py-2.5 text-sm font-semibold text-(--ink-900) transition hover:bg-(--ink-900) hover:text-white!"
             >
               Start shopping
             </Link>

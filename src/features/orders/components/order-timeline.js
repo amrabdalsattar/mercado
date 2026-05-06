@@ -4,11 +4,10 @@ export function OrderTimeline({ steps }) {
       {steps.map((step) => (
         <li key={step.label} className="flex items-center gap-3">
           <span
-            className={`h-3 w-3 rounded-full ${
-              step.complete ? "bg-[var(--success)]" : "bg-[var(--surface-3)]"
-            }`}
+            className={`h-3 w-3 rounded-full ${step.complete ? "bg-(--success)" : "bg-(--surface-3)"
+              }`}
           />
-          <span className="text-sm text-[var(--ink-700)]">{step.label}</span>
+          <span className="text-sm text-(--ink-700)">{step.label}</span>
         </li>
       ))}
     </ol>

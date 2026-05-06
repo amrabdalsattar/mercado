@@ -52,10 +52,10 @@ export default async function ProductDetailPage({ params }) {
   return (
     <div className="shell py-12">
       <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-        <Card className="overflow-hidden rounded-[36px] bg-gradient-to-br from-[var(--surface-2)] via-white to-[var(--surface-1)] p-8">
-          <div className="flex h-full min-h-[480px] flex-col justify-between">
+        <Card className="overflow-hidden rounded-[36px] bg-linear-to-br from-(--surface-2) via-white to-(--surface-1) p-8">
+          <div className="flex h-full min-h-120 flex-col justify-between">
             {product.coverImage ? (
-              <div className="relative mb-6 flex-1 overflow-hidden rounded-[24px]">
+              <div className="relative mb-6 flex-1 overflow-hidden rounded-3xl">
                 <Image
                   src={product.coverImage}
                   alt={product.name}
@@ -71,7 +71,7 @@ export default async function ProductDetailPage({ params }) {
               {product.featured ? "⭐ Featured pick" : product.category || "Product"}
             </Badge>
             <div className="space-y-3">
-              <p className="text-sm uppercase tracking-[0.22em] text-[var(--ink-700)]">
+              <p className="text-sm uppercase tracking-[0.22em] text-(--ink-700)">
                 {product.category || "General"}
               </p>
               <h1 className="max-w-xl text-5xl font-semibold tracking-tight text-balance">
@@ -103,13 +103,13 @@ export default async function ProductDetailPage({ params }) {
             <div className="mt-5 flex items-end gap-3">
               <p className="text-4xl font-semibold">{formatCurrency(price)}</p>
               {product.salePrice ? (
-                <p className="mb-1 text-base text-[var(--ink-500)] line-through">
+                <p className="mb-1 text-base text-(--ink-500) line-through">
                   {formatCurrency(product.price)}
                 </p>
               ) : null}
             </div>
 
-            <p className="mt-5 text-base leading-8 text-[var(--ink-700)]">
+            <p className="mt-5 text-base leading-8 text-(--ink-700)">
               {product.description}
             </p>
 
@@ -120,13 +120,13 @@ export default async function ProductDetailPage({ params }) {
               </Button>
             </div>
 
-            <p className="mt-4 text-xs text-[var(--ink-500)]">
+            <p className="mt-4 text-xs text-(--ink-500)">
               Secure checkout — your payment info is always protected.
             </p>
           </Card>
 
           <Card className="p-7">
-            <p className="text-sm uppercase tracking-[0.2em] text-[var(--brand-deep)]">
+            <p className="text-sm uppercase tracking-[0.2em] text-(--brand-deep)">
               Product details
             </p>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -144,7 +144,7 @@ export default async function ProductDetailPage({ params }) {
               ].map((spec) => (
                 <div
                   key={spec}
-                  className="rounded-2xl border border-[var(--line)] bg-white/60 px-4 py-3 text-sm"
+                  className="rounded-2xl border border-(--line) bg-white/60 px-4 py-3 text-sm"
                 >
                   {spec}
                 </div>
@@ -153,13 +153,13 @@ export default async function ProductDetailPage({ params }) {
           </Card>
 
           <Card className="p-7">
-            <p className="text-sm uppercase tracking-[0.2em] text-[var(--brand-deep)]">
+            <p className="text-sm uppercase tracking-[0.2em] text-(--brand-deep)">
               About the seller
             </p>
             <h2 className="mt-4 text-2xl font-semibold">
               {product.sellerName || "Mercado seller"}
             </h2>
-            <p className="mt-2 text-sm leading-7 text-[var(--ink-700)]">
+            <p className="mt-2 text-sm leading-7 text-(--ink-700)">
               This product is sold by a verified seller on Mercado. All listings
               are reviewed to ensure quality and accuracy before going live.
             </p>
@@ -179,7 +179,7 @@ export default async function ProductDetailPage({ params }) {
             ))}
           </div>
         ) : (
-          <Card className="mt-8 p-6 text-[var(--ink-700)]">
+          <Card className="mt-8 p-6 text-(--ink-700)">
             No related products yet — check back soon as more items are added.
           </Card>
         )}

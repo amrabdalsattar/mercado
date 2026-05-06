@@ -19,15 +19,15 @@ export function AuthForm({ mode }) {
     const payload =
       mode === "register"
         ? {
-            name: formData.get("name"),
-            email: formData.get("email"),
-            password: formData.get("password"),
-            role: formData.get("role"),
-          }
+          name: formData.get("name"),
+          email: formData.get("email"),
+          password: formData.get("password"),
+          role: formData.get("role"),
+        }
         : {
-            email: formData.get("email"),
-            password: formData.get("password"),
-          };
+          email: formData.get("email"),
+          password: formData.get("password"),
+        };
 
     const response = await fetch(`/api/auth/${mode}`, {
       method: "POST",
@@ -63,7 +63,7 @@ export function AuthForm({ mode }) {
         <select
           name="role"
           defaultValue="CUSTOMER"
-          className="rounded-2xl border border-[var(--line)] bg-white/80 px-4 py-3 text-sm outline-none"
+          className="rounded-2xl border border-(--line)] bg-white/80 px-4 py-3 text-sm outline-none"
         >
           <option value="CUSTOMER">Customer</option>
           <option value="SELLER">Seller</option>

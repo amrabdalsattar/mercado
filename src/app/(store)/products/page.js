@@ -42,7 +42,7 @@ export default async function ProductsPage({ searchParams }) {
       <div className="mt-8 grid gap-6">
         <ProductFilters filters={filters} categories={categories} />
 
-        <Card className="flex items-center justify-between gap-4 p-5 text-sm text-[var(--ink-700)]">
+        <Card className="flex items-center justify-between gap-4 p-5 text-sm text-(--ink-700)">
           <p>
             {products.length > 0
               ? `Showing ${products.length} ${products.length === 1 ? "product" : "products"}`
@@ -56,8 +56,8 @@ export default async function ProductsPage({ searchParams }) {
         {products.length ? (
           <ProductsGrid products={products} />
         ) : (
-          <Card className="p-10 text-center text-[var(--ink-700)]">
-            <p className="text-lg font-semibold text-[var(--ink-900)]">No products found</p>
+          <Card className="p-10 text-center text-(--ink-700)">
+            <p className="text-lg font-semibold text-(--ink-900)">No products found</p>
             <p className="mt-2 text-sm leading-7">
               We couldn&apos;t find anything matching your search. Try adjusting your filters or
               searching for something different.
