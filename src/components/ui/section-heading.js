@@ -10,7 +10,7 @@ export function SectionHeading({ eyebrow, title, copy, className }) {
           {title}
         </h2>
         {copy ? (
-          <p className="max-w-2xl text-base leading-7 text-[var(--ink-700)]">
+          <p className="max-w-2xl text-base leading-7 text-(--ink-700)]">
             {copy}
           </p>
         ) : null}

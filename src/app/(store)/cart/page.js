@@ -37,7 +37,7 @@ export default async function CartPage() {
                 <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
                   <div>
                     <h2 className="text-xl font-semibold">{item.name}</h2>
-                    <p className="mt-2 text-sm text-[var(--ink-500)]">
+                    <p className="mt-2 text-sm text-(--ink-500)">
                       Unit price: {formatCurrency(item.price)}
                     </p>
                   </div>
@@ -56,14 +56,14 @@ export default async function CartPage() {
             ))
           ) : (
             <Card className="p-10 text-center">
-              <p className="text-lg font-semibold text-[var(--ink-900)]">Your cart is empty</p>
-              <p className="mt-2 text-sm leading-7 text-[var(--ink-700)]">
+              <p className="text-lg font-semibold text-(--ink-900)">Your cart is empty</p>
+              <p className="mt-2 text-sm leading-7 text-(--ink-700)">
                 Looks like you haven&apos;t added anything yet. Start browsing and find something you
                 love.
               </p>
               <Link
                 href="/products"
-                className="mt-6 inline-flex items-center justify-center rounded-full border border-[var(--ink-900)] px-5 py-2.5 text-sm font-semibold text-[var(--ink-900)]"
+                className="mt-6 inline-flex items-center justify-center rounded-full border border-(--ink-900) px-5 py-2.5 text-sm font-semibold text-(--ink-900)"
               >
                 Browse products
               </Link>
@@ -73,7 +73,7 @@ export default async function CartPage() {
 
         <Card className="h-fit p-6">
           <h2 className="text-2xl font-semibold">Order summary</h2>
-          <div className="mt-6 grid gap-3 text-sm text-[var(--ink-700)]">
+          <div className="mt-6 grid gap-3 text-sm text-(--ink-700)">
             <div className="flex justify-between">
               <span>Subtotal</span>
               <span>{formatCurrency(subtotal)}</span>
@@ -86,7 +86,7 @@ export default async function CartPage() {
               <span>Tax (8%)</span>
               <span>{formatCurrency(tax)}</span>
             </div>
-            <div className="mt-2 flex justify-between border-t border-[var(--line)] pt-4 text-base font-semibold text-[var(--ink-900)]">
+            <div className="mt-2 flex justify-between border-t border-(--line) pt-4 text-base font-semibold text-(--ink-900)">
               <span>Total</span>
               <span>{formatCurrency(total)}</span>
             </div>
@@ -94,12 +94,12 @@ export default async function CartPage() {
 
           <a
             href="/checkout"
-            className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-[var(--ink-900)] px-5 py-3 text-sm font-semibold !text-white transition hover:bg-[var(--brand-deep)]"
+            className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-(--ink-900) px-5 py-3 text-sm font-semibold text-white! transition hover:bg-(--brand-deep)"
           >
             Continue to checkout
           </a>
 
-          <p className="mt-4 text-center text-xs text-[var(--ink-500)]">
+          <p className="mt-4 text-center text-xs text-(--ink-500)">
             Secure checkout — your payment info is always protected.
           </p>
         </Card>

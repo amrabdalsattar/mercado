@@ -3,11 +3,11 @@ import { cn } from "@/lib/utils";
 
 const styles = {
   primary:
-    "bg-[var(--ink-900)] text-white hover:bg-[var(--brand-deep)] focus-visible:outline-[var(--brand)]",
+    "bg-(--ink-900)] text-white hover:bg-(--brand-deep)] focus-visible:outline-[var(--brand)]",
   secondary:
-    "bg-white/70 text-[var(--ink-900)] hover:bg-white focus-visible:outline-[var(--brand)]",
+    "bg-white/70 text-(--ink-900)] hover:bg-white focus-visible:outline-[var(--brand)]",
   ghost:
-    "bg-transparent text-[var(--ink-700)] hover:bg-black/5 focus-visible:outline-[var(--brand)]",
+    "bg-transparent text-(--ink-700)] hover:bg-black/5 focus-visible:outline-[var(--brand)]",
 };
 
 export function Button({
